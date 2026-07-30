@@ -369,7 +369,11 @@ BLE 扫描和已连接设备的通信共享同一个 radio，同时进行会导�
 ### 环境准备
 
 1. 安装 [ESP-IDF v6.0.1](https://docs.espressif.com/projects/esp-idf/en/v6.0.1/esp32s3/get-started/)
-2. 设置环境变量（或使用项目提供的 `run_idf.py`）：
+2. 安装 Python 依赖（仓库辅助脚本及 `idf.py` 所需）：
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. 设置环境变量（或使用项目提供的 `run_idf.py`）：
    ```bash
    export IDF_PATH=/path/to/esp-idf
    export IDF_TOOLS_PATH=/path/to/espressif/tools
