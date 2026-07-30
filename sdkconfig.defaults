@@ -1,0 +1,59 @@
+################################################################################
+# ESP32-S3 BLE HID Host -> USB HID Keyboard Bridge
+# sdkconfig.defaults
+################################################################################
+
+# === Target ===
+CONFIG_IDF_TARGET="esp32s3"
+
+# === Bluetooth (BLE Only - S3 不支持 BT Classic) ===
+CONFIG_BT_ENABLED=y
+CONFIG_BT_BLUEDROID_ENABLED=y
+CONFIG_BT_BLE_ENABLED=y
+# BT_HID_ENABLED 是 Classic BT HID, S3 不支持, 不需要
+# BLE HID Host 通过 esp_hid 组件 + GATTC 实现
+CONFIG_BT_BLE_42_FEATURES_SUPPORTED=y
+CONFIG_BT_BLE_50_FEATURES_SUPPORTED=y
+CONFIG_BT_SMP_ENABLE=y
+CONFIG_BT_BLE_SMP_ENABLE=y
+CONFIG_BT_GATTC_ENABLE=y
+CONFIG_BT_GATTC_NOTIF_REG_MAX=16
+CONFIG_BT_BLE_DYNAMIC_ENV_MEMORY=n
+
+# === USB Serial JTAG - 必须禁用, 释放 USB OTG 给 TinyUSB ===
+# USB Serial JTAG 和 TinyUSB 共享 GPIO19/20, 不能同时使用
+CONFIG_USJ_ENABLE_USB_SERIAL_JTAG=n
+CONFIG_ESP_CONSOLE_SECONDARY_USB_SERIAL_JTAG=n
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG_ENABLED=n
+
+# === TinyUSB (USB HID Device) ===
+# 1 个 HID 接口, 通过 Report ID 区分键盘(1)和鼠标(2)
+CONFIG_TINYUSB_HID_COUNT=1
+
+# === FreeRTOS ===
+CONFIG_FREERTOS_HZ=1000
+CONFIG_FREERTOS_ENABLE_BACKWARD_COMPATIBILITY=y
+
+# === Partition Table ===
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# === Flash (8MB - ESP32-S3-WROOM-1 常见配置) ===
+CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="8MB"
+CONFIG_ESPTOOLPY_FLASHMODE_DIO=y
+CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
+
+# === PSRAM (可选 - 如果开发板有 PSRAM，取消注释) ===
+# CONFIG_SPIRAM=y
+# CONFIG_SPIRAM_USE_MALLOC=y
+# CONFIG_SPIRAM_MODE_OCT=y
+# CONFIG_SPIRAM_SPEED_80M=y
+
+# === Logging ===
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+CONFIG_LOG_COLORS=y
+
+# === USB PHY (ESP32-S3 内置) ===
+# 原生 USB OTG: D+ = GPIO20, D- = GPIO19
+# 无需额外配置，由 esp_tinyusb 组件自动处理

@@ -1,0 +1,7 @@
+﻿# Name,   Type, SubType, Offset,  Size,    Flags
+# NVS: 存储配对/bonding 信息
+nvs,      data, nvs,     ,        0x6000,
+# PHY 初始化数据
+phy_init, data, phy,     ,        0x1000,
+# 应用分区 (2MB 足够，留出余量)
+factory,  app,  factory, ,        2M,
