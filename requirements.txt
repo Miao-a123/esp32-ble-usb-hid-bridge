@@ -1,0 +1,43 @@
+# ==============================================================================
+# ESP32-S3 BLE to USB HID Bridge — Python 环境依赖
+# ==============================================================================
+#
+# 【最重要的前置依赖：ESP-IDF 框架本体（无法用 pip 安装）】
+#   本项目基于 Espressif IoT Development Framework v6.0.1 构建。
+#   请先按官方文档安装 ESP-IDF v6.0.1：
+#       https://docs.espressif.com/projects/esp-idf/en/v6.0.1/esp32s3/get-started/
+#   安装完成后，ESP-IDF 会自带其完整的 Python 依赖（见 $IDF_PATH/requirements.txt）。
+#
+# 【本文件的作用】
+#   1) 列出仓库自带的辅助脚本（如 monitor_serial.py）所需的第三方包；
+#   2) 列出 idf.py 构建所需的 Python 依赖，方便在无 ESP-IDF 环境的机器上
+#      用 `pip install -r requirements.txt` 快速补齐 Python 侧依赖。
+#
+# 安装方式：
+#   pip install -r requirements.txt
+#
+# 注意：Windows 用户如需在 idf.py monitor 之外使用 curses 风格的串口监视，
+#       可额外安装 windows-curses（已在本文件中注释，按需取消注释）。
+# ==============================================================================
+
+# --- 仓库辅助脚本依赖（monitor_serial.py 使用 pyserial）---
+pyserial==3.5
+
+# --- idf.py / ESP-IDF 构建所需 Python 依赖（与 ESP-IDF v6.0.1 对应）---
+click>=8.0.0
+cryptography>=39.0.0
+pyparsing>=3.0.0
+pyelftools>=0.29
+rich>=12.0.0
+toml>=0.10.0
+typing_extensions>=4.0.0
+requests>=2.26.0
+kconfiglib>=14.0.0
+bitstring>=3.1.9
+reedsolo>=1.6
+construct>=2.10.0
+ecdsa>=0.16.0
+pyserial>=3.3
+
+# --- Windows 专用（可选，取消注释以启用 curses 风格终端）---
+# windows-curses; sys_platform == 'win32'
